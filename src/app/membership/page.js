@@ -10,5 +10,5 @@ async function MembershipPage() {
 
   return <Membership profileInfo={profileInfo} />;
 }
-
+x
 export default MembershipPage;
