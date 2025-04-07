@@ -10,7 +10,6 @@ import {
 import { createClient } from "@supabase/supabase-js";
 const supabaseUrl = 'https://wgjikkcgzyakwfsmvovr.supabase.co'
 const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_KEY
-console.log(supabaseUrl, "supabaseUrl",supabaseKey, "supabaseKey");
 const supabaseClient = createClient(supabaseUrl, supabaseKey)
 
 function CandidateList({
