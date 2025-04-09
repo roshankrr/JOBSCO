@@ -14,8 +14,8 @@ import { createProfileAction } from "@/actions";
 import { createClient } from "@supabase/supabase-js";
 
 const supabaseClient = createClient(
-  "https://ymsijpnegskkoiuerthi.supabase.co",
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inltc2lqcG5lZ3Nra29pdWVydGhpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTQyMzYzNDYsImV4cCI6MjAyOTgxMjM0Nn0.PM7Nr9qTZFEJsf62eHgkFXKGPqt0gfMdFN6SOJjCP6M"
+  "https://wgjikkcgzyakwfsmvovr.supabase.co",
+  process.env.NEXT_PUBLIC_SUPABASE_KEY
 );
 
 function OnBoard() {
@@ -37,20 +37,30 @@ function OnBoard() {
   }
 
   async function handleUploadPdfToSupabase() {
+    if (!file) return;
+  
     const { data, error } = await supabaseClient.storage
-      .from("job-board-public")
-      .upload(`/public/${file.name}`, file, {
+      .from("resumes")
+      .upload(`public/${file.name}`, file, {
         cacheControl: "3600",
         upsert: false,
       });
-    console.log(data, error);
+  
+    if (error) {
+      console.error("Upload failed:", error.message);
+      return;
+    }
+  
+    console.log("Uploaded:", data);
+  
     if (data) {
-      setCandidateFormData({
-        ...candidateFormData,
+      setCandidateFormData((prev) => ({
+        ...prev,
         resume: data.path,
-      });
+      }));
     }
   }
+  
 
   console.log(candidateFormData);
 

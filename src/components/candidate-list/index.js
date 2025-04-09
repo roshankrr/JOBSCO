@@ -32,7 +32,7 @@ function CandidateList({
 
   function handlePreviewResume() {
     const { data } = supabaseClient.storage
-      .from("job-board-public")
+      .from("resumes")
       .getPublicUrl(currentCandidateDetails?.candidateInfo?.resume);
 
     const a = document.createElement("a");
