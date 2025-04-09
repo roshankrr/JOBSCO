@@ -15,6 +15,7 @@ async function OnBoardPage() {
       redirect("/membership");
     else redirect("/");
   } else return <OnBoard />;
+  
 }
 
 export default OnBoardPage;
