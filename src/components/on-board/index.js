@@ -43,7 +43,7 @@ function OnBoard() {
       .from("resumes")
       .upload(`public/${file.name}`, file, {
         cacheControl: "3600",
-        upsert: false,
+        upsert: true,
       });
   
     if (error) {
