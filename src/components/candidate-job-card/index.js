@@ -17,11 +17,24 @@ import JobIcon from "../job-icon";
 import { Button } from "../ui/button";
 import { createJobApplicationAction } from "@/actions";
 import { useToast } from "../ui/use-toast";
+import { atsResume } from "@/actions/ats_resume";
 
 function CandidateJobCard({ jobItem, profileInfo, jobApplications }) {
   const [showJobDetailsDrawer, setShowJobDetailsDrawer] = useState(false);
   console.log(jobApplications, "jobApplications");
   const { toast } = useToast();
+
+  async function atsResumeHandler(userId) {
+    try {
+        const data=await atsResume(profileInfo?.userId);
+        console.log(data, "atsResumeData");
+    } catch (error) {
+      console.error("Error fetching ATS resume data:", error);
+    }
+  }
+
+
+
 
   async function handlejobApply() {
     if (!profileInfo?.isPremiumUser && jobApplications.length >= 2) {
@@ -74,7 +87,9 @@ function CandidateJobCard({ jobItem, profileInfo, jobApplications }) {
               <DrawerTitle className="text-4xl dark:text-white font-extrabold text-gray-800">
                 {jobItem?.title}
               </DrawerTitle>
+              
               <div className="flex gap-3">
+                <Button className="disabled:opacity-65 flex h-11 items-center justify-center px-5" onClick={atsResumeHandler}>Check ATS</Button>
                 <Button
                   onClick={handlejobApply}
                   disabled={
@@ -86,6 +101,7 @@ function CandidateJobCard({ jobItem, profileInfo, jobApplications }) {
                   }
                   className="disabled:opacity-65 flex h-11 items-center justify-center px-5"
                 >
+                  
                   {jobApplications.findIndex(
                     (item) => item.jobID === jobItem?._id
                   ) > -1

@@ -37,7 +37,7 @@ async function Home() {
             </section>
             <section className="relative w-full lg:w-[50%] flex items-center justify-end">
               <img
-                src="/homeimage2.png"
+                src="/homeimage2.png" 
                 alt="Hero"
                 className="h-full rounded-lg w-full object-contain z-10"
               />
