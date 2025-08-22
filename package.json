@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@clerk/nextjs": "^4.31.6",
+    "@google/genai": "^1.15.0",
     "@radix-ui/react-dialog": "^1.0.5",
     "@radix-ui/react-label": "^2.0.2",
     "@radix-ui/react-menubar": "^1.0.4",
@@ -22,6 +23,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "fs": "^0.0.1-security",
+    "genai": "^0.0.18",
     "lucide-react": "^0.368.0",
     "mongoose": "^8.3.2",
     "next": "14.2.1",

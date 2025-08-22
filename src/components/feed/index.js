@@ -7,13 +7,8 @@ import { Textarea } from "../ui/textarea";
 import { Label } from "../ui/label";
 import { CirclePlus, Heart } from "lucide-react";
 import { Input } from "../ui/input";
-import { createClient } from "@supabase/supabase-js";
 import { createFeedPostAction, updateFeedPostAction } from "@/actions";
-
-const supabaseClient = createClient(
-  "https://ymsijpnegskkoiuerthi.supabase.co",
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inltc2lqcG5lZ3Nra29pdWVydGhpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTQyMzYzNDYsImV4cCI6MjAyOTgxMjM0Nn0.PM7Nr9qTZFEJsf62eHgkFXKGPqt0gfMdFN6SOJjCP6M"
-);
+import {supabaseClient} from '@/lib/supabaseClient'; ;
 
 function Feed({ user, profileInfo, allFeedPosts }) {
   const [showPostDialog, setShowPostDialog] = useState(false);
@@ -30,10 +25,9 @@ function Feed({ user, profileInfo, allFeedPosts }) {
 
   function handleFetchImagePublicUrl(getData) {
     const { data } = supabaseClient.storage
-      .from("job-board-public")
+      .from("resumes")
       .getPublicUrl(getData.path);
-
-    console.log(data);
+    console.log(data,'rar');
 
     if (data)
       setFormData({
@@ -44,7 +38,7 @@ function Feed({ user, profileInfo, allFeedPosts }) {
 
   async function handleUploadImageToSupabase() {
     const { data, error } = await supabaseClient.storage
-      .from("job-board-public")
+      .from("resumes")
       .upload(`/public/${imageData?.name}`, imageData, {
         cacheControl: "3600",
         upsert: false,
@@ -67,11 +61,7 @@ function Feed({ user, profileInfo, allFeedPosts }) {
       },
       "/feed"
     );
-
-    setFormData({
-      imageURL: "",
-      message: "",
-    });
+    setShowPostDialog(false);
   }
 
   async function handleUpdateFeedPostLikes(getCurrentFeedPostItem) {

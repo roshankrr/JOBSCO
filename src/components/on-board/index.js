@@ -12,6 +12,7 @@ import {
 import { useUser } from "@clerk/nextjs";
 import { createProfileAction } from "@/actions";
 import { createClient } from "@supabase/supabase-js";
+import { ThemeProvider } from "next-themes";
 
 const supabaseClient = createClient(
   "https://wgjikkcgzyakwfsmvovr.supabase.co",
@@ -27,18 +28,19 @@ function OnBoard() {
     initialCandidateFormData
   );
   const [file, setFile] = useState(null);
-
   const currentAuthUser = useUser();
   const { user } = currentAuthUser;
 
   function handleFileChange(event) {
-    event.preventDefault();
+    console.log('halwa');
+    // event.preventDefault();
     setFile(event.target.files[0]);
   }
 
   async function handleUploadPdfToSupabase() {
     if (!file) return;
-  
+    console.log(file, "file");
+
     const { data, error } = await supabaseClient.storage
       .from("resumes")
       .upload(`public/${file.name}`, file, {
@@ -82,10 +84,11 @@ function OnBoard() {
   }
 
   function handleCandidateFormValid() {
-    return Object.keys(candidateFormData).every(
-      (key) => candidateFormData[key].trim() !== ""
-    );
-  }
+  return Object.keys(candidateFormData).every((key) => {
+    const value = candidateFormData[key];
+    return typeof value === "string" ? value.trim() !== "" : !!value;
+  });
+}
 
   async function createProfile() {
     const data =
@@ -111,11 +114,11 @@ function OnBoard() {
   console.log(candidateFormData);
 
   return (
-    <div className="bg-white">
+    <div className={`${ThemeProvider}`}>
       <Tabs value={currentTab} onValueChange={handleTabChange}>
         <div className="w-full">
           <div className="flex items-baseline justify-between border-b pb-6 pt-24">
-            <h1 className="text-4xl font-bold tracking-tight text-gray-900">
+            <h1 className="text-4xl font-bold tracking-tight ">
               Welcome to onboarding
             </h1>
             <TabsList>
@@ -151,3 +154,4 @@ function OnBoard() {
 }
 
 export default OnBoard;
+
