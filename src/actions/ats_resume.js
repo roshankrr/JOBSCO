@@ -34,7 +34,7 @@ export async function handlePreviewResume(currentCandidateDetails, jobDescriptio
 Extract all key requirements from the Job Description, including mandatory skills, preferred skills, years of experience, and educational background.
 Thoroughly parse the candidate's information from the Resume Link.
 Calculate a compatibility score by comparing the resume against the job description. Weight mandatory requirements more heavily than preferred ones.
-Your entire response must be only the final integer score. Do not include any text, explanations, or the '%' symbol.
+Your entire response must be only the final integer score. Do not include any text, explanations, or the '%' symbol. give above 10 and less then 95 
 Resum Link: ${data?.publicUrl} and score it out of 100 based solely on this job description: ${jobDescription}.
 Strictly evaluate these criteria:
 1. Relevance to Job Description: How well the resume matches the exact job requirements.
@@ -50,12 +50,29 @@ Strictly evaluate these criteria:
 }
 
 async function main({ prompt }) {
-  const response = await ai.models.generateContent({
+  try {
+    const response = await ai.models.generateContent({
     model: "gemini-2.5-flash",
     contents: prompt,
+    maxOutputTokens:100,
+    config:{
+      responseMimeType: "application/json",
+      responseSchema:{
+        type:"integer",
+        minimum:10,
+        maximum:95
+      }
+    }
+    
   });
   // console.log(response.text);
   return response.text;
+    
+  } catch (error) {
+    console.error("Error generating content with AI:", error);
+    return 0;
+  }
+
 }
 
 // await main();

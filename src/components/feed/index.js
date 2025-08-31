@@ -90,12 +90,12 @@ function Feed({ user, profileInfo, allFeedPosts }) {
 
   return (
     <Fragment>
-      <div className="mx-auto max-w-7xl">
-        <div className="flex items-baseline justify-between dark:border-white border-b pb-6 pt-24">
+      <div className="mx-auto md:max-w-7xl">
+        <div className="flex flex-col md:flex-row  gap-4  items-baseline justify-between dark:border-white border-b pb-6 pt-24">
           <h1 className="dark:text-white text-4xl font-bold tracking-tight text-gray-900">
             Explore Feed
           </h1>
-          <div className="flex items-center">
+          <div className="flex flex-wrap items-center">
             <Button
               onClick={() => setShowPostDialog(true)}
               className="flex h-11 items-center justify-center px-5"
@@ -105,14 +105,14 @@ function Feed({ user, profileInfo, allFeedPosts }) {
           </div>
         </div>
         <div className="py-12">
-          <div className="container m-auto p-0 flex flex-col gap-5 text-gray-700">
+          <div className="container m-auto p-0 flex flex-col  gap-5 text-gray-700">
             {allFeedPosts && allFeedPosts.length > 0 ? (
               allFeedPosts.map((feedPostItem) => (
                 <div
                   key={feedPostItem._id}
-                  className="group relative -mx-4 p-6 rounded-3xl bg-gray-100 hover:bg-white hover:shadow-2xl cursor-auto shadow-2xl shadow-transparent gap-8 flex"
+                  className="group sm:flex-wrap md:flex-nowrap relative -mx-4 p-6 rounded-3xl  bg-gray-100 hover:bg-white hover:shadow-2xl cursor-auto shadow-2xl shadow-transparent gap-8 flex"
                 >
-                  <div className="sm:w-2/6 rounded-3xl overflow-hidden transition-all duration-500 group-hover:rounded-xl">
+                  <div className="sm:w-1/2 rounded-3xl overflow-hidden transition-all duration-500 group-hover:rounded-xl">
                     <img
                       src={feedPostItem?.image}
                       alt="Post"
@@ -171,7 +171,7 @@ function Feed({ user, profileInfo, allFeedPosts }) {
               })
             }
             placeholder="What do you want to talk about?"
-            className="border-none outline-none focus-visible:ring-0 focus-visible:ring-offset-0 h-[200px] text-[28px]"
+            className="border-none dark:bg-gray-800 outline-none focus-visible:ring-0 focus-visible:ring-offset-0 h-[200px] text-[28px]"
           />
 
           <div className="flex gap-5 items-center justify-between">
